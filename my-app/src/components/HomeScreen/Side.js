@@ -1,11 +1,12 @@
-import React from "react";
+import React from "react"
 import {
   DocumentReportIcon,
   ChartSquareBarIcon,
   UsersIcon,
   DatabaseIcon,
-} from "@heroicons/react/solid";
-import { Sidenav, Nav, Button } from "rsuite";
+} from "@heroicons/react/solid"
+import { Sidenav, Nav, Button } from "rsuite"
+import { Link } from "react-router-dom"
 
 function Side() {
   return (
@@ -20,18 +21,22 @@ function Side() {
                   <p>Bảng điều khiển</p>
                 </span>
               </Nav.Item>
-              <Nav.Item className="h-[50px] py-4 px-6 hover:text-[#1C64F2]">
-                <span className="flex">
-                  <DatabaseIcon className="w-5 mr-2" />
-                  <p>Danh sách sản phẩm</p>
-                </span>
-              </Nav.Item>
-              <Nav.Item className="h-[50px] py-4 px-6 hover:text-[#1C64F2]">
-                <span className="flex">
-                  <UsersIcon className="w-5 mr-2 " />
-                  <p>Khách hàng</p>
-                </span>
-              </Nav.Item>
+              <Link to="/listProducts">
+                <Nav.Item className="h-[50px] py-4 px-6 hover:text-[#1C64F2]">
+                  <span className="flex">
+                    <DatabaseIcon className="w-5 mr-2" />
+                    <p>Danh sách sản phẩm</p>
+                  </span>
+                </Nav.Item>
+              </Link>
+              <Link to="/listCustomers">
+                <Nav.Item className="h-[50px] py-4 px-6 hover:text-[#1C64F2]">
+                  <span className="flex">
+                    <UsersIcon className="w-5 mr-2 " />
+                    <p>Khách hàng</p>
+                  </span>
+                </Nav.Item>
+              </Link>
               <Nav.Item className="h-[50px] py-4 px-6 hover:text-[#1C64F2]">
                 <span className="flex">
                   <DocumentReportIcon className="w-5 mr-2" />
@@ -50,7 +55,7 @@ function Side() {
         </div>
       </Sidenav>
     </div>
-  );
+  )
 }
 
-export default Side;
+export default Side
