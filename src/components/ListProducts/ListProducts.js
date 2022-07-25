@@ -2,6 +2,7 @@ import React from "react"
 import { useState } from "react"
 import { Icon, Button } from "rsuite"
 import TableListProducts from "./TableListProducts"
+import FilterProducts from "./FilterProducts"
 import styles from "./ListProducts.module.scss"
 function ListProducts() {
   const [show, setShow] = useState(true)
