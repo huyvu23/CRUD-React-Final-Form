@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import "rsuite/dist/styles/rsuite-default.css"
+import Nav from "./components/HomeScreen/Nav"
+import Side from "./components/HomeScreen/Side"
+import Home from "./components/HomeScreen/Home"
+import ListProducts from "./components/ListProducts/ListProducts"
+import ListCustomers from "./components/ListCustomers/ListCustomers"
+import { Routes, Route } from "react-router-dom"
+import { Container, Header, Content, Sidebar } from "rsuite"
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="show-container">
+        <Container>
+          <Header>
+            <Nav />
+          </Header>
+          <Container>
+            <Sidebar>
+              <Side />
+            </Sidebar>
+            <Content>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/listProducts" element={<ListProducts />} />
+                <Route path="/listCustomers" element={<ListCustomers />} />
+              </Routes>
+            </Content>
+          </Container>
+        </Container>
+      </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

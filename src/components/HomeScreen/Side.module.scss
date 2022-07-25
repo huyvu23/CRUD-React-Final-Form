@@ -1,0 +1,43 @@
+.sideContainer {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 240px !important;
+  border-right: 2px solid rgb(229, 231, 234, 1);
+  position: fixed !important;
+  top: 0px !important;
+  bottom: 0px !important;
+  left: 0px !important;
+  padding-top: 70px !important;
+}
+.sideBody {
+  display: flex !important;
+  flex-direction: column !important;
+  list-style: none !important;
+}
+.navContainer {
+  padding: 0 !important;
+}
+.operator {
+  height: 50px !important;
+  border-bottom: 2px solid rgb(229, 231, 234, 1) !important;
+}
+
+.listOptions {
+  height: 50px !important;
+  p {
+    &:hover {
+      color: #1c64f2 !important;
+    }
+  }
+}
+
+.sideButton {
+  width: 100% !important;
+  background: #1e429f !important;
+  color: #e1effe !important;
+  height: 32px !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  cursor: pointer !important;
+  border-radius: 0 !important;
+}
