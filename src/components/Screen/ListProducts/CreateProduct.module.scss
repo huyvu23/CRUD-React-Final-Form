@@ -1,0 +1,51 @@
+.container {
+  margin-top: 24px;
+  margin-right: 24px;
+}
+
+.backgroundTable {
+  width: 100%;
+  padding: 24px 16px;
+  background-color: white;
+  overflow: visible;
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  h1 {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+  }
+}
+
+.buttonContainer {
+  margin-top: 28px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttonSave {
+  color: white;
+  background-color: rgb(29 78 216);
+  margin-right: 8px;
+  &:hover {
+    color: white;
+    background-color: rgb(30 64 175);
+  }
+}
+
+.formContainer {
+  margin-top: 24px;
+}
+
+.widthInput {
+  width: 100% !important;
+  border-radius: 5px;
+  border: 2px solid rgb(209 213 219) !important;
+}
+
+.containerInput {
+  margin-top: 24px !important;
+}
+
+.colorWarning {
+  color: red;
+}

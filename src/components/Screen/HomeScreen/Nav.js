@@ -1,5 +1,5 @@
 import React from "react"
-import avatar from "../../assets/avatar.jpg"
+import avatar from "../../../assets/avatar.jpg"
 import styles from "./Nav.module.scss"
 import { Icon } from "rsuite"
 import { Link } from "react-router-dom"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import styles from "./TableListProducts.module.scss"
-import { lengthMenu } from "../../commonConst/lengthMenu"
+import { lengthMenu } from "../../../commonConst/lengthMenu"
 import { Table, Icon } from "rsuite"
 const { Column, HeaderCell, Cell, Pagination } = Table
 
@@ -9,7 +9,6 @@ function TableListProducts() {
   const [fakeData, setFakeData] = useState([])
   const [displayLength, setDisplayLength] = useState(10)
   const [page, setPage] = useState(1)
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     axios.get("https://random-data-api.com/api/device/random_device?size=30").then((res) => {
@@ -30,7 +29,7 @@ function TableListProducts() {
   const data = getData()
   return (
     <div className={styles.wrapper}>
-      <Table height={420} data={data} loading={loading}>
+      <Table height={420} data={data}>
         <Column width={200}>
           <HeaderCell>Id</HeaderCell>
           <Cell dataKey="id" />
@@ -64,10 +63,10 @@ function TableListProducts() {
               }
               return (
                 <span>
-                  <a className={styles.buttonEdit} onClick={handleAction}>
+                  <a href="!" className={styles.buttonEdit} onClick={handleAction}>
                     <Icon className={styles.edit} icon="pencil" />
                   </a>
-                  <a onClick={handleAction}>
+                  <a href="!" onClick={handleAction}>
                     <Icon className={styles.remove} icon="trash" />
                   </a>
                 </span>
