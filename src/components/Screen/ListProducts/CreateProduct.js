@@ -1,12 +1,26 @@
 import React from "react"
-import { Button, Row, Col, DatePicker, Input, InputPicker } from "rsuite"
-import { Link } from "react-router-dom"
+import axios from "axios"
 import styles from "./CreateProduct.module.scss"
+import dataTypePlatForm from "../../DataSelect/DataPlatForm"
+import dataAgency from "../../DataSelect/DataAgency"
+import { useNavigate } from "react-router-dom"
 import { Form, Field } from "react-final-form"
+import { Button, Row, Col, Input, InputPicker } from "rsuite"
+
 function CreateProduct() {
-  const onSubmit = () => {
-    debugger
+  //* useHistory replace equal useNavigate
+  const navigate = useNavigate()
+  const onSubmit = (values) => {
+    const Obj = {
+      platform: values.PlatForm,
+      serial_number: values.Serial,
+      manufacturer: values.Agency,
+      model: values.Product,
+      version: values.Version,
+    }
+    axios.post("https://62e38befb54fc209b88b1670.mockapi.io/api/products", { Obj })
   }
+
   const required = (value) => (value ? undefined : "Bạn phải diền thông tin này")
   const mustBeNumber = (value) => (isNaN(value) ? "Bản phải điền số" : undefined)
   const composeValidators =
@@ -14,41 +28,18 @@ function CreateProduct() {
     (value) =>
       validators.reduce((error, validator) => error || validator(value), undefined)
 
-  const dataStatus = [
-    {
-      label: "Còn hàng",
-      value: "Còn hàng",
-    },
-    {
-      label: "Hết hàng",
-      value: "Hết hàng",
-    },
-  ]
   return (
-    <div>
+    <>
       <section className={styles.container}>
         <div className={styles.backgroundTable}>
           <h1>Thêm mới sản phẩm</h1>
           <div className={styles.formContainer}>
             <Form
               onSubmit={onSubmit}
-              validate={(values) => {
-                const errors = {}
-                if (!values.Product) {
-                  errors.Product = "Bạn chưa điền tên sản phẩm"
-                }
-                if (!values.Price) {
-                  errors.Price = "Bạn chưa điền giá sản phẩm"
-                }
-                if (values.TypesProduct === "") {
-                  errors.TypesProducts = "Bạn chưa chọn loại sản phẩm"
-                }
-
-                return errors
-              }}
               render={({ handleSubmit, values, submitting, pristine }) => (
+                //* handleSubmit will call event.preventDefault()
                 <form onSubmit={handleSubmit}>
-                  <div className={styles.buttonContainer}>
+                  <Row className={styles.buttonContainer}>
                     <Button
                       className={styles.buttonSave}
                       type="submit"
@@ -56,103 +47,100 @@ function CreateProduct() {
                     >
                       Lưu lại
                     </Button>
-                    <Link to="/listProducts">
-                      <Button>Quay lại</Button>
-                    </Link>
-                  </div>
+                    <Button onClick={() => navigate("/listProducts")}>Quay lại</Button>
+                  </Row>
                   <Row>
                     <Row className={styles.containerInput}>
                       <Col lg={12}>
-                        <Field name="Product">
+                        <Field name="Product" validate={required}>
                           {({ input, meta }) => (
-                            <div>
+                            <>
                               <Input
-                                className={styles.widthInput}
                                 {...input}
+                                className={styles.widthInput}
                                 type="text"
                                 placeholder="Sản phẩm"
                               />
                               {meta.error && meta.touched && (
                                 <span className={styles.colorWarning}>{meta.error}</span>
                               )}
-                            </div>
+                            </>
                           )}
                         </Field>
                       </Col>
                       <Col lg={12}>
-                        <Field name="Amount" validate={composeValidators(required, mustBeNumber)}>
+                        <Field name="Serial" validate={composeValidators(required)}>
                           {({ input, meta }) => (
-                            <div>
+                            <>
                               <Input
                                 className={styles.widthInput}
                                 {...input}
                                 type="text"
-                                placeholder="Số lượng"
+                                placeholder="Số Serial"
                               />
                               {meta.error && meta.touched && (
                                 <span className={styles.colorWarning}>{meta.error}</span>
                               )}
-                            </div>
+                            </>
                           )}
                         </Field>
                       </Col>
                     </Row>
                     <Row className={styles.containerInput}>
                       <Col lg={12}>
-                        <Field name="TypesProduct">
+                        <Field name="Agency">
                           {({ input, meta }) => (
-                            <div>
-                              <InputPicker placeholder="Loại SP" className={styles.widthInput} />;
-                              {meta.error && meta.touched && (
-                                <span className={styles.colorWarning}>{meta.error}</span>
-                              )}
-                            </div>
-                          )}
-                        </Field>
-                      </Col>
-                      <Col lg={12}>
-                        <Field name="Status">
-                          {({ input, meta }) => (
-                            <div>
+                            <>
                               <InputPicker
-                                data={dataStatus}
-                                placeholder="Trạng thái"
+                                {...input}
+                                data={dataAgency}
+                                placeholder="Hãng"
                                 className={styles.widthInput}
                               />
-                              ;
+
                               {meta.error && meta.touched && (
                                 <span className={styles.colorWarning}>{meta.error}</span>
                               )}
-                            </div>
+                            </>
+                          )}
+                        </Field>
+                      </Col>
+                      <Col lg={12}>
+                        <Field name="PlatForm">
+                          {({ input, meta }) => (
+                            <>
+                              <InputPicker
+                                {...input}
+                                data={dataTypePlatForm}
+                                placeholder="Nền tảng"
+                                className={styles.widthInput}
+                              />
+
+                              {meta.error && meta.touched && (
+                                <span className={styles.colorWarning}>{meta.error}</span>
+                              )}
+                            </>
                           )}
                         </Field>
                       </Col>
                     </Row>
                     <Row className={styles.containerInput}>
                       <Col lg={12}>
-                        <Field className={styles.widthInput} name="Date" component="input"></Field>
-                      </Col>
-                      <Col lg={12}>
-                        <Field name="Price">
+                        <Field name="Version" validate={composeValidators(required, mustBeNumber)}>
                           {({ input, meta }) => (
-                            <div>
+                            <>
                               <Input
-                                className={styles.widthInput}
                                 {...input}
+                                className={styles.widthInput}
                                 type="text"
-                                placeholder="Giá bán"
+                                placeholder="Phiên bản"
                               />
                               {meta.error && meta.touched && (
                                 <span className={styles.colorWarning}>{meta.error}</span>
                               )}
-                            </div>
+                            </>
                           )}
                         </Field>
-                        {/* className={styles.widthInput}
-                          name="Price"
-                          component="input"
-                          type="text"
-                          placeholder="Giá bán" */}
                       </Col>
                     </Row>
                   </Row>
@@ -163,7 +151,7 @@ function CreateProduct() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   )
 }
 

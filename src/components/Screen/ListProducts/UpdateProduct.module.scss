@@ -32,8 +32,8 @@
   }
 }
 
-.formContainer {
-  margin-top: 24px;
+.containerInput {
+  margin-top: 24px !important;
 }
 
 .widthInput {
@@ -41,15 +41,6 @@
   border-radius: 5px;
 }
 
-.containerInput {
-  margin-top: 24px !important;
-}
-
 .colorWarning {
   color: red;
-}
-
-.checkboxContainer {
-  display: flex;
-  flex-direction: column;
 }

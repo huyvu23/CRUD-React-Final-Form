@@ -1,19 +1,18 @@
-import React from "react"
-import { useState } from "react"
-import { Icon, Button } from "rsuite"
-import TableListProducts from "./TableListProducts"
+import React, { useState } from "react"
+import { Link } from "react-router-dom"
+import { Button, Icon } from "rsuite"
 import FilterProduct from "./FilterProduct"
 import styles from "./ListProducts.module.scss"
-import { Link } from "react-router-dom"
+import TableListProducts from "./TableListProducts"
 function ListProducts() {
   const [show, setShow] = useState(false)
 
   return (
-    <div>
+    <>
       <section className={styles.container}>
         <div className={styles.backgroundTable}>
           <h1>Danh sách sản phẩm</h1>
-          <section className={styles.searchAndButton}>
+          <div className={styles.searchAndButton}>
             {/* SEARCH */}
             <div className={styles.searchContainer}>
               <div className={styles.search}>
@@ -37,12 +36,12 @@ function ListProducts() {
                 {show ? "Ẩn bộ lọc" : "Bộ lọc"}
               </Button>
             </div>
-          </section>
-          {show ? <FilterProduct /> : ""}
+          </div>
+          {show ? <FilterProduct /> : <></>}
           <TableListProducts />
         </div>
       </section>
-    </div>
+    </>
   )
 }
 

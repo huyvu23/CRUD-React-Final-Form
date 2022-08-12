@@ -1,8 +1,7 @@
 import React from "react"
-import styles from "./Side.module.scss"
-import { Sidenav, Nav, Button } from "rsuite"
-import { Icon } from "rsuite"
 import { Link } from "react-router-dom"
+import { Button, Icon, Nav, Sidenav } from "rsuite"
+import styles from "./Side.module.scss"
 
 function Side() {
   return (
@@ -27,10 +26,12 @@ function Side() {
                   <p>Khách hàng</p>
                 </Nav.Item>
               </Link>
-              <Nav.Item className={styles.listOptions}>
-                <Icon icon="file-text"></Icon>
-                <p>Đơn hàng</p>
-              </Nav.Item>
+              <Link to="listOrder">
+                <Nav.Item className={styles.listOptions}>
+                  <Icon icon="file-text"></Icon>
+                  <p>Đơn hàng</p>
+                </Nav.Item>
+              </Link>
             </Nav>
           </Sidenav.Body>
           <Button className={styles.sideButton}>Thu Gọn</Button>
