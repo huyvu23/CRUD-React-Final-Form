@@ -21,6 +21,7 @@ function Login() {
     })
       .then((res) => res.json())
       .then((result) => {
+        localStorage.setItem("tokenCrud", JSON.stringify(result.token))
         if (result) {
           dispatch(
             setUserLogin({

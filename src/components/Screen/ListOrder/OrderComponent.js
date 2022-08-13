@@ -11,19 +11,21 @@ function OrderComponent(props) {
   const { listNameProducts, listNameCus, listCustomers, listProducts } = props
   //   Hooks
   const form = useForm()
-  const { change } = form
+  const { change, getFieldState } = form
 
   //*   ================================ Form change function ===============================
   const handleChangeCustomer = (value) => {
-    const customer = listCustomers.find((item) => item.id === value) ?? null
+    const customer = listCustomers.find((item) => item.firstName === value) ?? null
     change("numberPhone", customer.phone)
     change("address", customer.address.city)
   }
 
   const handleChangeProduct = (value) => {
-    const product = listProducts.find((item) => item.id === value) ?? null
+    const product = listProducts.find((item) => item.title === value) ?? null
+
+    const amount = parseInt(getFieldState("amount")?.value)
     change("price", product.price)
-    change("money", product.price)
+    change("money", product.price * amount)
   }
   return (
     <>
@@ -101,6 +103,7 @@ function OrderComponent(props) {
             name="money"
             placeholder="Tự động"
             readOnly
+            thousandSeparator={true}
             component={NumberFormatField}
           />
         </Col>

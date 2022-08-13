@@ -12,6 +12,7 @@ function Nav() {
 
   const signOut = () => {
     dispatch(setSignOut())
+    localStorage.removeItem("tokenCrud")
     navigate("/login")
   }
 

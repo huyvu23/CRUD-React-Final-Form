@@ -1,59 +1,62 @@
-import React, { useState, useEffect } from "react"
-import { Table, Icon } from "rsuite"
+import React, { useState, memo } from "react"
+import { Table, Icon, Notification } from "rsuite"
 import styles from "./TableListOrder.module.scss"
 import { lengthMenu } from "../../../commonConst/lengthMenu"
-import CreateOrderModal from "./CreateOrderModal"
+import PropTypes from "prop-types"
 
 const { Column, HeaderCell, Cell, Pagination } = Table
-function TableListOrder() {
+function TableListOrder(props) {
+  const { fakeData, setFakeData, handleUpdate, indexUpdate } = props
+
   const [displayLength, setDisplayLength] = useState(10)
   const [page, setPage] = useState(1)
-  const [show, setShow] = useState(false)
-  const [fakeData, setFakeData] = useState()
 
-  // let getData = () => {
-  //   return fakeData.filter((v, i) => {
-  //     const start = displayLength * (page - 1)
-  //     const end = start + displayLength
-  //     return i >= start && i < end
-  //   })
-  // }
-  // const data = getData()
+  let getData = () => {
+    return fakeData.filter((v, i) => {
+      const start = displayLength * (page - 1)
+      const end = start + displayLength
+      return i >= start && i < end
+    })
+  }
+  const data = getData()
 
-  const handleUpdate = () => {
-    setShow(true)
+  const handleDelete = (index) => {
+    let listOrder = JSON.parse(localStorage.getItem("listOrder"))
+    listOrder.splice(index, 1)
+    localStorage.setItem("listOrder", JSON.stringify(listOrder))
+    setFakeData(listOrder)
+    Notification.success({
+      title: "Xoá dữ liệu thành công",
+    })
   }
 
-  const handleClose = () => {
-    setShow(false)
-  }
   return (
     <>
       <div className={styles.wrapper}>
-        <Table height={420}>
+        <Table height={420} data={data}>
           <Column width={200}>
             <HeaderCell>Mã đơn hàng</HeaderCell>
             <Cell dataKey="id" />
           </Column>
           <Column width={200}>
             <HeaderCell>Tên khách hàng</HeaderCell>
-            <Cell dataKey="id" />
+            <Cell dataKey="nameCustomer" />
           </Column>
           <Column width={200}>
             <HeaderCell>SĐT</HeaderCell>
-            <Cell dataKey="id" />
+            <Cell dataKey="numberPhone" />
           </Column>
           <Column width={200}>
             <HeaderCell>Địa chỉ giao hàng</HeaderCell>
-            <Cell dataKey="id" />
+            <Cell dataKey="address" />
           </Column>
           <Column width={200}>
             <HeaderCell>Tên sản phẩm</HeaderCell>
-            <Cell dataKey="title" />
+            <Cell dataKey="nameProduct" />
           </Column>
           <Column width={200}>
             <HeaderCell>Số lượng</HeaderCell>
-            <Cell dataKey="stock" />
+            <Cell dataKey="amount" />
           </Column>
           <Column width={200}>
             <HeaderCell>Đơn giá sản phẩm</HeaderCell>
@@ -61,21 +64,24 @@ function TableListOrder() {
           </Column>
           <Column width={200}>
             <HeaderCell>Thành tiền</HeaderCell>
-            <Cell dataKey="id" />
+            <Cell dataKey="money" />
           </Column>
           <Column width={100}>
             <HeaderCell>Chức năng</HeaderCell>
             <Cell>
-              {(rowData) => {
+              {(rowData, index) => {
                 return (
                   <span>
-                    <span style={{ marginRight: 15, cursor: "pointer" }} onClick={handleUpdate}>
+                    <span
+                      style={{ marginRight: 15, cursor: "pointer" }}
+                      onClick={() => {
+                        handleUpdate(rowData)
+                        indexUpdate(index)
+                      }}
+                    >
                       <Icon icon="pencil" />
-                      {show && (
-                        <CreateOrderModal show={show} onHide={handleClose} rowData={rowData} />
-                      )}
                     </span>
-                    <span style={{ cursor: "pointer" }}>
+                    <span style={{ cursor: "pointer" }} onClick={() => handleDelete(index)}>
                       <Icon icon="trash" />
                     </span>
                   </span>
@@ -88,7 +94,7 @@ function TableListOrder() {
           lengthMenu={lengthMenu}
           activePage={page}
           displayLength={displayLength}
-          // total={fakeData.length}
+          total={fakeData.length}
           onChangePage={(dataKey) => {
             return setPage(dataKey)
           }}
@@ -100,5 +106,8 @@ function TableListOrder() {
     </>
   )
 }
-
-export default TableListOrder
+TableListOrder.propTypes = {
+  fakeData: PropTypes.object,
+  setFakeData: PropTypes.func,
+}
+export default memo(TableListOrder)

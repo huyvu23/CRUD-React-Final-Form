@@ -9,6 +9,10 @@ function ListOrder() {
   const [formType, setFormType] = useState()
   const [listProducts, setListProducts] = useState([])
   const [listCustomers, setListCustomers] = useState([])
+  let listOrder = JSON.parse(localStorage.getItem("listOrder"))
+  const [fakeData, setFakeData] = useState(listOrder)
+  const [rowData, setRowData] = useState()
+  const [index, setIndex] = useState()
 
   const getListUsers = async () => {
     await fetch("https://dummyjson.com/users")
@@ -38,6 +42,25 @@ function ListOrder() {
   const handleClose = () => {
     setShow(false)
   }
+  const indexUpdate = (index) => {
+    setIndex(index)
+  }
+  const handleUpdate = (rowData) => {
+    setRowData(rowData)
+    setShow(true)
+    setFormType("update")
+  }
+
+  const listNameCus = []
+  listCustomers.forEach((item) => {
+    return listNameCus.push({ value: item.firstName, label: item.firstName })
+  })
+
+  const listNameProducts = []
+  listProducts.forEach((item) => {
+    return listNameProducts.push({ value: item.title, label: item.title })
+  })
+
   return (
     <>
       <section className={styles.container}>
@@ -70,13 +93,29 @@ function ListOrder() {
                   formType={formType}
                   listProducts={listProducts}
                   listCustomers={listCustomers}
+                  listNameCus={listNameCus}
+                  listNameProducts={listNameProducts}
+                  setFakeData={setFakeData}
+                  rowData={rowData}
+                  index={index}
                 />
               )}
-              <FillterModal />
+
+              <FillterModal
+                listProducts={listProducts}
+                listCustomers={listCustomers}
+                fakeData={fakeData}
+                setFakeData={setFakeData}
+              />
             </div>
           </div>
 
-          <TableListOrder />
+          <TableListOrder
+            fakeData={fakeData}
+            setFakeData={setFakeData}
+            handleUpdate={handleUpdate}
+            indexUpdate={indexUpdate}
+          />
         </div>
       </section>
     </>

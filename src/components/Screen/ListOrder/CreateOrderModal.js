@@ -1,27 +1,53 @@
 import React from "react"
 import { Form } from "react-final-form"
-import { Button, Form as RSform, Modal } from "rsuite"
+import { Button, Form as RSform, Modal, Notification } from "rsuite"
 import OrderComponent from "./OrderComponent"
+import PropTypes from "prop-types"
 
 function CreateOrderModal(props) {
-  const { show, formType, onHide, rowData, listCustomers, listProducts } = props
+  const {
+    show,
+    formType,
+    onHide,
+    rowData,
+    listCustomers,
+    listProducts,
+    listNameProducts,
+    listNameCus,
+    setFakeData,
+    index,
+  } = props
 
-  const listNameCus = []
-  listCustomers.forEach((item) => {
-    return listNameCus.push({ value: item.id, label: item.firstName })
-  })
+  console.log(index)
 
-  const listNameProducts = []
-  listProducts.forEach((item) => {
-    return listNameProducts.push({ value: item.id, label: item.title })
-  })
-
-  const handleSubmit = (values) => {}
+  const handleSubmit = (values) => {
+    if (formType === "add") {
+      let listOrder = JSON.parse(localStorage.getItem("listOrder"))
+      listOrder.push(values)
+      localStorage.setItem("listOrder", JSON.stringify(listOrder))
+      setFakeData(listOrder)
+      onHide()
+      Notification.success({
+        title: "Thêm dữ liệu thành công",
+      })
+    } else {
+      let listOrder = JSON.parse(localStorage.getItem("listOrder"))
+      // console.log(listOrder[index])
+      listOrder[index] = { values }
+      setFakeData(listOrder)
+      localStorage.setItem("listOrder", JSON.stringify(listOrder))
+      onHide()
+      Notification.success({
+        title: "Thêm dữ liệu thành công",
+      })
+    }
+  }
 
   return (
     <>
       <div className="modal-container">
         <Modal show={show} size="lg" onHide={onHide}>
+          {/* Header */}
           <Modal.Header>
             <Modal.Title>
               {formType === "add" ? "Thêm mới đơn hàng" : "Chỉnh sửa đơn hàng"}
@@ -59,5 +85,12 @@ function CreateOrderModal(props) {
     </>
   )
 }
-
+CreateOrderModal.propTypes = {
+  show: PropTypes.bool,
+  formType: PropTypes.string,
+  onHide: PropTypes.func,
+  listCustomers: PropTypes.object,
+  listProducts: PropTypes.object,
+  setFakeData: PropTypes.func,
+}
 export default CreateOrderModal
