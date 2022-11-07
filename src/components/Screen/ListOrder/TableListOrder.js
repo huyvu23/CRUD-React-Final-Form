@@ -1,8 +1,8 @@
-import React, { useState, memo } from "react"
-import { Table, Icon, Notification } from "rsuite"
-import styles from "./TableListOrder.module.scss"
-import { lengthMenu } from "../../../commonConst/lengthMenu"
 import PropTypes from "prop-types"
+import React, { memo, useState } from "react"
+import { Icon, Notification, Table } from "rsuite"
+import { lengthMenu } from "../../../commonConst/lengthMenu"
+import styles from "./TableListOrder.module.scss"
 
 const { Column, HeaderCell, Cell, Pagination } = Table
 function TableListOrder(props) {
@@ -12,7 +12,7 @@ function TableListOrder(props) {
   const [page, setPage] = useState(1)
 
   let getData = () => {
-    return fakeData.filter((v, i) => {
+    return fakeData?.filter((v, i) => {
       const start = displayLength * (page - 1)
       const end = start + displayLength
       return i >= start && i < end
@@ -94,7 +94,7 @@ function TableListOrder(props) {
           lengthMenu={lengthMenu}
           activePage={page}
           displayLength={displayLength}
-          total={fakeData.length}
+          total={fakeData?.length}
           onChangePage={(dataKey) => {
             return setPage(dataKey)
           }}

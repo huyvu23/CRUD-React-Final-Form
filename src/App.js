@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux"
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import { Container, Content, Header, Sidebar } from "rsuite"
 import "rsuite/dist/styles/rsuite-default.css"
@@ -12,12 +13,11 @@ import CreateProduct from "./components/Screen/ListProducts/CreateProduct"
 import ListProducts from "./components/Screen/ListProducts/ListProducts"
 import UpdateProduct from "./components/Screen/ListProducts/UpdateProduct"
 import Login from "./components/Screen/LoginScreen/Login"
-import { useSelector } from "react-redux"
 import { selectUserToken } from "./Features/userSlice"
+
 function App() {
   const userToken = useSelector(selectUserToken)
-  // const tokenCrud = JSON.parse(localStorage.getItem("tokenCrud"))
-  // console.log(tokenCrud)
+
   return (
     <Router>
       {!userToken ? (

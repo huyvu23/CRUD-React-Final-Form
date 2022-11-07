@@ -1,10 +1,10 @@
 import React from "react"
 import { Field, Form } from "react-final-form"
-import { Button, Form as RSform, Grid, Row } from "rsuite"
-import styles from "./Login.module.scss"
-import { setUserLogin } from "../../../Features/userSlice"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { Button, Form as RSform, Grid, Row } from "rsuite"
+import { setUserLogin } from "../../../Features/userSlice"
+import styles from "./Login.module.scss"
 
 function Login() {
   const dispatch = useDispatch()
@@ -21,7 +21,6 @@ function Login() {
     })
       .then((res) => res.json())
       .then((result) => {
-        localStorage.setItem("tokenCrud", JSON.stringify(result.token))
         if (result) {
           dispatch(
             setUserLogin({

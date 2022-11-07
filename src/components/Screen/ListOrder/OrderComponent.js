@@ -22,11 +22,11 @@ function OrderComponent(props) {
 
   const handleChangeProduct = (value) => {
     const product = listProducts.find((item) => item.title === value) ?? null
-
     const amount = parseInt(getFieldState("amount")?.value)
     change("price", product.price)
     change("money", product.price * amount)
   }
+
   return (
     <>
       <Row>
