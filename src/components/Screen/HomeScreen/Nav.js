@@ -1,9 +1,9 @@
 import React from "react"
-import styles from "./Nav.module.scss"
-import { Icon } from "rsuite"
-import { Link, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { selectUserPhoto, selectUserName, setSignOut } from "../../../Features/userSlice"
+import { Link, useNavigate } from "react-router-dom"
+import { Icon } from "rsuite"
+import { selectUserName, selectUserPhoto, setSignOut } from "../../../Features/userSlice"
+import styles from "./Nav.module.scss"
 function Nav() {
   const dispatch = useDispatch()
   const userImage = useSelector(selectUserPhoto)
@@ -12,7 +12,6 @@ function Nav() {
 
   const signOut = () => {
     dispatch(setSignOut())
-    localStorage.removeItem("tokenCrud")
     navigate("/login")
   }
 

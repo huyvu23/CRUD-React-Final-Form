@@ -7,7 +7,6 @@ import styles from "./TableListOrder.module.scss"
 const { Column, HeaderCell, Cell, Pagination } = Table
 function TableListOrder(props) {
   const { fakeData, setFakeData, handleUpdate, indexUpdate } = props
-
   const [displayLength, setDisplayLength] = useState(10)
   const [page, setPage] = useState(1)
 

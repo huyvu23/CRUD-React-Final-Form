@@ -16,6 +16,7 @@ root.render(
   // </Provider>
 
   <Provider store={store}>
+    {/* 2 props loading và persistor đều yêu cầu phải có */}
     <PersistGate loading={null} persistor={persistor}>
       <App />
     </PersistGate>
