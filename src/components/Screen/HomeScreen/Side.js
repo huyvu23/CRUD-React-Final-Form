@@ -17,7 +17,7 @@ function Side() {
               <Link to="/listProducts">
                 <Nav.Item className={styles.listOptions}>
                   <Icon icon="database"></Icon>
-                  <p>Danh sách sản phẩm</p>
+                  <p>Danh sách phòng ban</p>
                 </Nav.Item>
               </Link>
               <Link to="listCustomers">

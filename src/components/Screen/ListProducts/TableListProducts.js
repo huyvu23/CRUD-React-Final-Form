@@ -1,12 +1,12 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { Icon, Table } from "rsuite"
+import { Icon, Notification, Table } from "rsuite"
 import { lengthMenu } from "../../../commonConst/lengthMenu"
 import styles from "./TableListProducts.module.scss"
-
+// Destructuring of Table
 const { Column, HeaderCell, Cell, Pagination } = Table
-const baseURL = "https://62e38befb54fc209b88b1670.mockapi.io/api/products"
+const baseURL = "http://localhost:8080/api/v1/departments"
 
 function TableListProducts() {
   const [loading, setLoading] = useState(true)
@@ -25,9 +25,17 @@ function TableListProducts() {
 
   //! Function Delete
   const deleteItem = (e, id) => {
-    e.preventDefault()
-    axios.delete(`${baseURL}/${parseInt(id)}`).then((res) => {
-      getListProducts()
+    axios.delete(`${baseURL}/delete/${parseInt(id)}`).then((res) => {
+      if (res.status === 200) {
+        Notification.success({
+          title: "Xoá thành công",
+        })
+        getListProducts()
+      } else {
+        Notification.error({
+          title: "Xoá thất bại",
+        })
+      }
     })
   }
 
@@ -48,29 +56,13 @@ function TableListProducts() {
     <>
       <div className={styles.wrapper}>
         <Table height={420} data={data} loading={loading}>
-          <Column width={200}>
+          <Column width={500}>
             <HeaderCell>Id</HeaderCell>
             <Cell dataKey="id" />
           </Column>
-          <Column width={200}>
-            <HeaderCell>Hãng</HeaderCell>
-            <Cell dataKey="manufacturer" />
-          </Column>
-          <Column width={200}>
-            <HeaderCell>Sản phẩm</HeaderCell>
-            <Cell dataKey="model" />
-          </Column>
-          <Column width={200}>
-            <HeaderCell>Nền tảng</HeaderCell>
-            <Cell dataKey="platform" />
-          </Column>
-          <Column width={200}>
-            <HeaderCell>Số Serial</HeaderCell>
-            <Cell dataKey="serial_number" />
-          </Column>
-          <Column width={200}>
-            <HeaderCell>Phiên bản</HeaderCell>
-            <Cell dataKey="version" />
+          <Column width={500}>
+            <HeaderCell>Tên phòng ban</HeaderCell>
+            <Cell dataKey="name" />
           </Column>
           <Column width={200}>
             <HeaderCell>Chức năng</HeaderCell>
@@ -78,7 +70,7 @@ function TableListProducts() {
               {(rowData) => {
                 return (
                   <span>
-                    <Link to={"/updateProduct"} className={styles.buttonEdit}>
+                    <Link to={`/updateProduct/${rowData.id}`} className={styles.buttonEdit}>
                       <Icon className={styles.edit} icon="pencil" />
                     </Link>
                     <span

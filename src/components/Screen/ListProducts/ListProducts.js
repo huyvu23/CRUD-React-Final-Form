@@ -11,7 +11,7 @@ function ListProducts() {
     <>
       <section className={styles.container}>
         <div className={styles.backgroundTable}>
-          <h1>Danh sách sản phẩm</h1>
+          <h1>Danh sách phòng ban</h1>
           <div className={styles.searchAndButton}>
             {/* SEARCH */}
             <div className={styles.searchContainer}>

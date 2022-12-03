@@ -15,11 +15,9 @@ function CreateOrderModal(props) {
     listNameProducts,
     listNameCus,
     setFakeData,
-    index,
   } = props
 
   const handleSubmit = (values) => {
- 
     if (formType === "add") {
       let listOrder = JSON.parse(localStorage.getItem("listOrder"))
       listOrder.push(values)
@@ -31,7 +29,7 @@ function CreateOrderModal(props) {
       })
     } else {
       let listOrder = JSON.parse(localStorage.getItem("listOrder"))
-      console.log((listOrder[index] = { values }))
+
       // listOrder[index] = { values }
       // setFakeData(listOrder)
       // localStorage.setItem("listOrder", JSON.stringify(listOrder))
