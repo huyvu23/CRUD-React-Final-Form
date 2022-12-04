@@ -24,7 +24,7 @@ function TableListProducts() {
   }
 
   //! Function Delete
-  const deleteItem = (e, id) => {
+  const deleteItem = (id) => {
     axios.delete(`${baseURL}/delete/${parseInt(id)}`).then((res) => {
       if (res.status === 200) {
         Notification.success({
@@ -74,8 +74,8 @@ function TableListProducts() {
                       <Icon className={styles.edit} icon="pencil" />
                     </Link>
                     <span
-                      onClick={(e) => {
-                        deleteItem(e, rowData.id)
+                      onClick={() => {
+                        deleteItem(rowData.id)
                       }}
                     >
                       <Icon className={styles.remove} icon="trash" />
