@@ -13,6 +13,7 @@ function ListCustomers() {
   const [rowData, setRowData] = useState()
   const handleCreate = () => {
     setShow(true)
+    setFormType("create")
   }
   const handleClose = () => {
     setShow(false)
@@ -40,7 +41,7 @@ function ListCustomers() {
     <>
       <section className={styles.container}>
         <div className={styles.backgroundTable}>
-          <h1>Danh sách khách hàng</h1>
+          <h1>Danh sách Account</h1>
           <div className={styles.searchAndButton}>
             {/* SEARCH */}
             <div className={styles.searchContainer}>

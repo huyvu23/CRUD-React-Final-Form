@@ -1,11 +1,56 @@
-import React from "react"
+import axios from "axios"
+import React, { useEffect, useState } from "react"
 import { Field, Form } from "react-final-form"
 import { Button, Col, Form as RSform, Modal, Row } from "rsuite"
 import { EmailValid, Required } from "../../../utils/Validate"
 import { InputField, InputPickerField } from "../../CustomField"
+const baseURL = "http://localhost:8081/api/v1"
 function ModalCreateAndUpdate(props) {
   const { show, onHide, formType, rowData } = props
-  const handleSubmit = (values) => {}
+
+  const [listPosition, setListPosition] = useState([])
+  const [listDepartment, setListDepartment] = useState([])
+
+  const getListDepartment = () => {
+    axios.get(`${baseURL}/departments`).then((res) => {
+      console.log(res)
+      setListDepartment(res.data)
+    })
+  }
+
+  const getListPositions = () => {
+    axios.get(`${baseURL}/positions`).then((res) => {
+      console.log(res)
+      setListPosition(res.data)
+    })
+  }
+
+  useEffect(() => {
+    getListDepartment()
+    getListPositions()
+  }, [])
+
+  const handleSubmit = (values) => {
+    axios({
+      method: "POST",
+      url: `${baseURL}/accounts/create`,
+      data: JSON.stringify(values),
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          Notification.success({
+            title: "Thêm thành công",
+          })
+          onHide()
+        }
+      })
+      .catch((error) => {
+        Notification.error({
+          title: "Thêm lỗi",
+        })
+      })
+  }
   return (
     <>
       <div className="modal-container">
@@ -53,10 +98,12 @@ function ModalCreateAndUpdate(props) {
                     <Col lg={10}>
                       <Field
                         label="Department"
+                        valueKey="id"
+                        labelKey="name"
                         name="department"
                         placeholder="Chọn"
                         component={InputPickerField}
-                        // inputvalue={listNameCus}
+                        inputvalue={listDepartment || []}
                       />
                     </Col>
                   </Row>
@@ -64,9 +111,11 @@ function ModalCreateAndUpdate(props) {
                     <Col lg={10}>
                       <Field
                         label="Position"
+                        valueKey="id"
+                        labelKey="name"
                         name="position"
                         placeholder="Chọn"
-                        // inputvalue={listNameProducts}
+                        inputvalue={listPosition || []}
                         component={InputPickerField}
                       />
                     </Col>

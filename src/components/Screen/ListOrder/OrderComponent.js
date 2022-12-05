@@ -9,6 +9,7 @@ import {
 import { PhoneValid, Required } from "../../../utils/Validate"
 function OrderComponent(props) {
   const { listNameProducts, listNameCus, listCustomers, listProducts } = props
+  console.log(listNameCus)
   //   Hooks
   const form = useForm()
   const { change, getFieldState } = form

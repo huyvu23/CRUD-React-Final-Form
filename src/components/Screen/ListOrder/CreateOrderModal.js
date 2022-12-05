@@ -1,8 +1,8 @@
+import PropTypes from "prop-types"
 import React from "react"
 import { Form } from "react-final-form"
 import { Button, Form as RSform, Modal, Notification } from "rsuite"
 import OrderComponent from "./OrderComponent"
-import PropTypes from "prop-types"
 
 function CreateOrderModal(props) {
   const {
