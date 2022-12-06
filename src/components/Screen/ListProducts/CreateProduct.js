@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { Button, Col, Input, Notification, Row } from "rsuite"
 import styles from "./CreateProduct.module.scss"
 
-const baseUrl = "http://localhost:8080/api/v1/departments"
+const baseUrl = "http://localhost:8011/api/v1/departments"
 
 function CreateProduct() {
   //* useHistory replace equal useNavigate

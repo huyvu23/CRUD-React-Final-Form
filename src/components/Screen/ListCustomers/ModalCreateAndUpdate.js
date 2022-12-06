@@ -1,26 +1,24 @@
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Field, Form } from "react-final-form"
-import { Button, Col, Form as RSform, Modal, Row } from "rsuite"
+import { Button, Col, Form as RSform, Modal, Notification, Row } from "rsuite"
 import { EmailValid, Required } from "../../../utils/Validate"
 import { InputField, InputPickerField } from "../../CustomField"
-const baseURL = "http://localhost:8081/api/v1"
+const baseURL = "http://localhost:8011/api/v1"
 function ModalCreateAndUpdate(props) {
-  const { show, onHide, formType, rowData } = props
+  const { show, onHide, formType, rowData, getListAccounts } = props
 
   const [listPosition, setListPosition] = useState([])
   const [listDepartment, setListDepartment] = useState([])
 
   const getListDepartment = () => {
     axios.get(`${baseURL}/departments`).then((res) => {
-      console.log(res)
       setListDepartment(res.data)
     })
   }
 
   const getListPositions = () => {
     axios.get(`${baseURL}/positions`).then((res) => {
-      console.log(res)
       setListPosition(res.data)
     })
   }
@@ -31,10 +29,17 @@ function ModalCreateAndUpdate(props) {
   }, [])
 
   const handleSubmit = (values) => {
+    const value = {
+      userName: values.username,
+      email: values.email,
+      fullName: values.fullname,
+      departmentId: values.department,
+      positionId: values.position,
+    }
     axios({
       method: "POST",
       url: `${baseURL}/accounts/create`,
-      data: JSON.stringify(values),
+      data: JSON.stringify(value),
       headers: { "Content-Type": "application/json; charset=utf-8" },
     })
       .then((response) => {
@@ -43,6 +48,7 @@ function ModalCreateAndUpdate(props) {
             title: "Thêm thành công",
           })
           onHide()
+          getListAccounts()
         }
       })
       .catch((error) => {
@@ -51,6 +57,35 @@ function ModalCreateAndUpdate(props) {
         })
       })
   }
+
+  const handleUpdate = (values) => {
+    const value = {
+      fullName: values.fullname,
+      departmentId: values.department,
+      positionId: values.position,
+    }
+    axios({
+      method: "PUT",
+      url: `${baseURL}/accounts/update/${values.id}`,
+      data: JSON.stringify(value),
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          Notification.success({
+            title: "Update thành công",
+          })
+          onHide()
+          getListAccounts()
+        }
+      })
+      .catch((error) => {
+        Notification.error({
+          title: "Update lỗi",
+        })
+      })
+  }
+
   return (
     <>
       <div className="modal-container">
@@ -61,7 +96,7 @@ function ModalCreateAndUpdate(props) {
           </Modal.Header>
           <Modal.Body>
             <Form
-              onSubmit={handleSubmit}
+              onSubmit={formType === "update" ? handleUpdate : handleSubmit}
               initialValues={formType === "update" ? rowData : {}}
               render={({ handleSubmit, values, submitting, pristine }) => (
                 <RSform onSubmit={handleSubmit}>

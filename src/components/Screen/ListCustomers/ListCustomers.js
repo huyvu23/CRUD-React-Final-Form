@@ -4,7 +4,7 @@ import { Button, Icon } from "rsuite"
 import styles from "./ListCustomer.module.scss"
 import ModalCreateAndUpdate from "./ModalCreateAndUpdate"
 import TableListCustomer from "./TableListCustomer"
-const baseURL = "http://localhost:8081/api/v1/accounts"
+const baseURL = "http://localhost:8011/api/v1/accounts"
 function ListCustomers() {
   const [listCustomers, setListCustomers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -70,6 +70,7 @@ function ListCustomers() {
               onHide={handleClose}
               formType={formType}
               rowData={rowData}
+              getListAccounts={getListAccounts}
             />
           )}
 
