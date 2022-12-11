@@ -1,12 +1,11 @@
-import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Icon, Notification, Table } from "rsuite"
+import departmentApi from "../../../api/departmentApi"
 import { lengthMenu } from "../../../commonConst/lengthMenu"
 import styles from "./TableListProducts.module.scss"
 // Destructuring of Table
 const { Column, HeaderCell, Cell, Pagination } = Table
-const baseURL = "http://localhost:8080/api/v1/departments"
 
 function TableListProducts() {
   const [loading, setLoading] = useState(true)
@@ -15,28 +14,26 @@ function TableListProducts() {
   const [page, setPage] = useState(1)
 
   //! getListProducts
-  const getListProducts = () => {
-    axios.get(`${baseURL}`).then((res) => {
-      setTimeout(() => {
-        return setFakeData(res.data) & setLoading(false)
-      }, 2000)
-    })
+  const getListProducts = async () => {
+    let res = await departmentApi.getAllDepartment()
+    setTimeout(() => {
+      return setFakeData(res.data) & setLoading(false)
+    }, 2000)
   }
 
   //! Function Delete
-  const deleteItem = (id) => {
-    axios.delete(`${baseURL}/delete/${parseInt(id)}`).then((res) => {
-      if (res.status === 200) {
-        Notification.success({
-          title: "Xoá thành công",
-        })
-        getListProducts()
-      } else {
-        Notification.error({
-          title: "Xoá thất bại",
-        })
-      }
-    })
+  const deleteItem = async (id) => {
+    let res = await departmentApi.deleteDepartment(parseInt(id))
+    if (res.status === 200) {
+      Notification.success({
+        title: "Xoá thành công",
+      })
+      getListProducts()
+    } else {
+      Notification.error({
+        title: "Xoá thất bại",
+      })
+    }
   }
 
   useEffect(() => {

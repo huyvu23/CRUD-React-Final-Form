@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react"
 import { Field, Form } from "react-final-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { Button, Col, Form as RSForm, Notification, Row } from "rsuite"
+import departmentApi from "../../../api/departmentApi"
 import { Required } from "../../../utils/Validate"
 import { InputField } from "../../CustomField"
 import styles from "./UpdateProduct.module.scss"
@@ -14,16 +15,19 @@ function UpdateProduct() {
   const { id } = useParams()
   const [data, setData] = useState()
   useEffect(() => {
-    axios.get(`${baseUrl}/${id}`).then((res) => {
-      if (res.status === 200) {
-        setData(res.data)
-      } else {
-        Notification.error({
-          title: "Lấy dữ liệu lỗi",
-        })
-      }
-    })
+    getDepartmentById()
   }, [id])
+
+  const getDepartmentById = async () => {
+    let res = await departmentApi.getDepartmentById(id)
+    if (res.status === 200) {
+      setData(res.data)
+    } else {
+      Notification.error({
+        title: "Lấy dữ liệu lỗi",
+      })
+    }
+  }
 
   const onSubmit = (values) => {
     const { id } = values

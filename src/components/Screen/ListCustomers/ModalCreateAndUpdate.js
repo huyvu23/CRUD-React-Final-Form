@@ -92,7 +92,9 @@ function ModalCreateAndUpdate(props) {
         <Modal size="lg" show={show} onHide={onHide}>
           {/* Header */}
           <Modal.Header>
-            <Modal.Title>Thêm mới Account</Modal.Title>
+            <Modal.Title>
+              {formType === "update" ? "Update Account" : "Thêm mới Account"}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form
@@ -164,7 +166,7 @@ function ModalCreateAndUpdate(props) {
                   >
                     Lưu
                   </Button>
-                  <pre>{JSON.stringify(values, 0, 2)}</pre>
+                  {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
                 </RSform>
               )}
             />
