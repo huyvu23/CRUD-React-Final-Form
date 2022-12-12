@@ -2,6 +2,8 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Field, Form } from "react-final-form"
 import { Button, Col, Form as RSform, Modal, Notification, Row } from "rsuite"
+import departmentApi from "../../../api/departmentApi"
+import positionApi from "../../../api/positionApi"
 import { EmailValid, Required } from "../../../utils/Validate"
 import { InputField, InputPickerField } from "../../CustomField"
 const baseURL = "http://localhost:8011/api/v1"
@@ -11,16 +13,14 @@ function ModalCreateAndUpdate(props) {
   const [listPosition, setListPosition] = useState([])
   const [listDepartment, setListDepartment] = useState([])
 
-  const getListDepartment = () => {
-    axios.get(`${baseURL}/departments`).then((res) => {
-      setListDepartment(res.data)
-    })
+  const getListDepartment = async () => {
+    let res = await departmentApi.getAllDepartment()
+    setListDepartment(res.data)
   }
 
-  const getListPositions = () => {
-    axios.get(`${baseURL}/positions`).then((res) => {
-      setListPosition(res.data)
-    })
+  const getListPositions = async () => {
+    let res = await positionApi.getAllPosition()
+    setListPosition(res.data)
   }
 
   useEffect(() => {

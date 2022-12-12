@@ -1,13 +1,13 @@
-import axios from "axios"
 import React, { useState } from "react"
 import { Icon, Notification, Table } from "rsuite"
+import accountApi from "../../../api/accountApi"
 import { lengthMenu } from "../../../commonConst/lengthMenu"
 import styles from "./TableListCustomer.module.scss"
 
 const { Column, HeaderCell, Cell, Pagination } = Table
 function TableListCustomer(props) {
   // DESTRUCTURING OF PROPS
-  const { loading, listCustomers, baseURL, getListAccounts, handleUpdate } = props
+  const { loading, listCustomers, getListAccounts, handleUpdate } = props
   const [displayLength, setDisplayLength] = useState(10)
   const [page, setPage] = useState(1)
 
@@ -20,19 +20,18 @@ function TableListCustomer(props) {
   }
   const data = getData()
 
-  const deleteAccount = (id) => {
-    axios.delete(`${baseURL}/delete/${parseInt(id)}`).then((res) => {
-      if (res.status === 200) {
-        Notification.success({
-          title: "Xoá thành công",
-        })
-        getListAccounts()
-      } else {
-        Notification.error({
-          title: "Xoá thất bại",
-        })
-      }
-    })
+  const deleteAccount = async (id) => {
+    let res = await accountApi.deleteAccount(parseInt(id))
+    if (res.status === 200) {
+      Notification.success({
+        title: "Xoá thành công",
+      })
+      getListAccounts()
+    } else {
+      Notification.error({
+        title: "Xoá thất bại",
+      })
+    }
   }
 
   return (

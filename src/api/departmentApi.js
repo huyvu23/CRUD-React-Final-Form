@@ -18,7 +18,7 @@ class DepartmentApi {
       console.error(error)
     }
   }
-  //  ! ========================
+
   deleteDepartment = (params) => {
     try {
       const url = `departments/delete/${params}`

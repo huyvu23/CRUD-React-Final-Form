@@ -1,10 +1,10 @@
-import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { Button, Icon } from "rsuite"
+import accountApi from "../../../api/accountApi"
 import styles from "./ListCustomer.module.scss"
 import ModalCreateAndUpdate from "./ModalCreateAndUpdate"
 import TableListCustomer from "./TableListCustomer"
-const baseURL = "http://localhost:8011/api/v1/accounts"
+
 function ListCustomers() {
   const [listCustomers, setListCustomers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -25,12 +25,11 @@ function ListCustomers() {
     setFormType("update")
   }
 
-  const getListAccounts = () => {
-    axios.get(baseURL).then((res) => {
-      setTimeout(() => {
-        return setListCustomers(res.data) & setLoading(false)
-      }, 2000)
-    })
+  const getListAccounts = async () => {
+    let res = await accountApi.getAllAccounts()
+    setTimeout(() => {
+      return setListCustomers(res.data) & setLoading(false)
+    }, 2000)
   }
 
   useEffect(() => {
@@ -77,7 +76,6 @@ function ListCustomers() {
           <TableListCustomer
             listCustomers={listCustomers}
             loading={loading}
-            baseURL={baseURL}
             getListAccounts={getListAccounts}
             handleUpdate={handleUpdate}
           />
